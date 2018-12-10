@@ -1,20 +1,23 @@
 import numpy as np
-
+import sys
 
 WORD_CONTEXT_THRESHOLD = 10
 
-path = 'sentence_co-occuring'
+path = sys.argv[1] #'window_co-occurence'
 
 word_context = {}
 
 with open(path) as file:
     for line in file:
         count, word, context = line.split()
-        if count >= WORD_CONTEXT_THRESHOLD:
+        if int(count) >= WORD_CONTEXT_THRESHOLD:
             if word not in word_context:
                 word_context[word] = {}
             word_context[word][context] = count
             #word_context.get(word,{})[context] = counter
+
+
+'''
 
 
 context_word = {}
@@ -38,6 +41,9 @@ for word, contexts in word_context.items():
     total += word_count
 
 
+'''
+'''
 for word, count in word_proba:
     word_proba[word] /= total
 
+'''

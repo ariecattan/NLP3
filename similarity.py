@@ -6,12 +6,13 @@ import time
 start = time.time()
 
 THRESHOLD = 100
-CONTEXT_THRESHOLD = 50
+CONTEXT_THRESHOLD = 20
 
 window = 2
-functional_pos = ['dt', 'in', 'to', 'cc', 'rb', 'prp', 'prp$', '.']
+functional_pos = ['dt', 'in', 'to', 'cc', 'rb', 'prp', 'prp$', 'md', 'wdt', 'pos', 'wrb', '.', "''", '``', '(', ')', ',', ':']
 
 path = sys.argv[1]
+type = '-w'
 
 counts = {}
 sentences = []
@@ -46,9 +47,13 @@ print 'Create dict : ', end
 
 
 def dict_to_file(dic, fname):
+    start = time.time()
     dic_file = open(fname,'w')
     for key, label in dic.items():
         dic_file.write(str(label) + ' ' + key + '\n')
+
+    end = time.time() - start
+    print "Saving file", end
 
 def filter_window(window):
     output = []
@@ -80,6 +85,7 @@ def sentence_to_features(all_sentences):
 
 def sentence_to_window_feature(all_sentences, k):
     #k is the number of context in each side of the word
+    start = time.time()
 
     lemma_window = {}
     for sentence in all_sentences:
@@ -91,29 +97,42 @@ def sentence_to_window_feature(all_sentences, k):
                 contexts = filter_window(contexts)
                 for context in contexts:
                     lemma_window[lemma + ' ' + context] = lemma_window.get(lemma + ' ' + context, 0) + 1
+
+    end = time.time() - start
+    print "Co-occurence word in window", end
+
     return lemma_window
 
+
+def sentence_to_dependency_features(all_sentences):
+    start = time.time()
+    end = time.time() - start
+    print "Dependency", end
 
 
 if __name__=='__main__':
 
-    by_sentence = sentence_to_features(sentences)
-    dict_to_file(by_sentence, 'sentence_co-occurence')
+    if type == '-s':
+        by_sentence = sentence_to_features(sentences)
+        dict_to_file(by_sentence, 'sentence_co-occurence')
 
+    elif type == '-w':
+        by_window = sentence_to_window_feature(sentences, window)
+        dict_to_file(by_window, 'window_co-occurence')
 
-    by_window = []
-    by_dependency = []
-
-
-
-
-
-        #by_window += sentence_to_window_feature(sentence, window)
-
-
-    print 'Generate word-context : ' + str(time.time() - start)
-    start = time.time()
+    elif type == '-d':
+        by_dependency = sentence_to_window_feature(sentences, window)
+        dict_to_file(by_dependency, 'dependency')
 
 
 
-    print 'Save sentences : ' + str(time.time() - start)
+
+
+
+
+    #by_window += sentence_to_window_feature(sentence, window)
+
+
+
+
+
