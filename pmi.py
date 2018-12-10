@@ -13,11 +13,9 @@ with open(path) as file:
         if int(count) >= WORD_CONTEXT_THRESHOLD:
             if word not in word_context:
                 word_context[word] = {}
-            word_context[word][context] = count
+            word_context[word][context] = float(count)
             #word_context.get(word,{})[context] = counter
 
-
-'''
 
 
 context_word = {}
@@ -41,9 +39,10 @@ for word, contexts in word_context.items():
     total += word_count
 
 
-'''
-'''
-for word, count in word_proba:
+
+for word, count in word_proba.items():
     word_proba[word] /= total
 
-'''
+
+
+

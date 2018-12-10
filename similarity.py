@@ -9,10 +9,12 @@ THRESHOLD = 100
 CONTEXT_THRESHOLD = 20
 
 window = 2
-functional_pos = ['dt', 'in', 'to', 'cc', 'rb', 'prp', 'prp$', 'md', 'wdt', 'pos', 'wrb', '.', "''", '``', '(', ')', ',', ':']
+functional_pos = ['dt', 'in', 'to', 'cc', 'rb', 'prp', 'prp$', 'md', 'wdt', 'pos', 'wrb', '.', "''", '``', '(', ')', ',', ':', '$']
 
-path = sys.argv[1]
-type = '-w'
+
+path = sys.argv[1] if len(sys.argv) > 1 else 'data/wikipedia.sample.trees.lemmatized'
+
+type = sys.argv[2] if len(sys.argv) > 2 else '-w'
 
 counts = {}
 sentences = []
@@ -38,6 +40,7 @@ start = time.time()
 words_to_compute = {word:count for word, count in counts.items() if count > THRESHOLD}
 
 w2i = {word:i for i, word in enumerate(words_to_compute)}
+
 del w2i['.']
 del w2i[',']
 i2w = {i:word for word, i in w2i.items()}
@@ -96,6 +99,8 @@ def sentence_to_window_feature(all_sentences, k):
                 contexts = sentence[i-k:i] + sentence[i+1:i+1+k]
                 contexts = filter_window(contexts)
                 for context in contexts:
+                    if context == 'a':
+                        print 'avrefvsdc'
                     lemma_window[lemma + ' ' + context] = lemma_window.get(lemma + ' ' + context, 0) + 1
 
     end = time.time() - start
