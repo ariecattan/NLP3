@@ -66,6 +66,12 @@ def filter_window(window):
             output.append(lemma)
     return list(set(output))
 
+def filter_functional_words(sentence):
+    output = []
+    for word_dic in window:
+        if word_dic['CPOSTAG'] not in functional_pos:
+            output.append(word_dic)
+    return output
 
 def sentence_to_features(all_sentences):
     start = time.time()
@@ -99,8 +105,6 @@ def sentence_to_window_feature(all_sentences, k):
                 contexts = sentence[i-k:i] + sentence[i+1:i+1+k]
                 contexts = filter_window(contexts)
                 for context in contexts:
-                    if context == 'a':
-                        print 'avrefvsdc'
                     lemma_window[lemma + ' ' + context] = lemma_window.get(lemma + ' ' + context, 0) + 1
 
     end = time.time() - start
