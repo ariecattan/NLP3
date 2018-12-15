@@ -120,5 +120,5 @@ if __name__ == '__main__':
         att[word] = get_k_most_context(word)
 
     fname, _ = path.split('_')
-    #dict_to_file(cosine, 'sim/sim_' + fname + '.txt')
-    #dict_to_file(att, 'att/att_' + fname + '.txt')
+    dict_to_file(cosine, 'sim/sim_' + fname + '.txt')
+    dict_to_file(att, 'att/att_' + fname + '.txt')

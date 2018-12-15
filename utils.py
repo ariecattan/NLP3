@@ -33,10 +33,9 @@ def create_table(list_file):
     for word in target_words:
         table = PrettyTable()
         table.title = word
-        column_names = ['dependency', 'window']
+        column_names = ['sentence', 'window', 'dependency']
         for i in xrange(length):
-            data = map(str, dic_list[i][word])
-            table.add_column(column_names[i], data)
+            table.add_column(column_names[i], dic_list[i][word])
 
         print table
         tables.append(table)
@@ -46,10 +45,14 @@ def create_table(list_file):
 if __name__ == '__main__':
     start = time.time()
 
-    folder_path = '/Users/arie.cattan/Desktop/Papier_Arie/BarIlan/NLP/Assignment/Ass3/word2vec/att/'
+    folder_path = '/Users/arie.cattan/Desktop/Papier_Arie/BarIlan/NLP/Assignment/Ass3/att/'
 
-    files = glob.glob(folder_path + '*.txt')
+    path1 = folder_path + 'att_sentence.txt'
+    path2 = folder_path + 'att_window.txt'
+    path3 = folder_path + 'att_dependency.txt'
+
+    files = [path1, path2, path3]
+
     tables = create_table(files)
-
 
     #np.savetxt(folder_path + 'similarities.txt', tables, fmt='%s')

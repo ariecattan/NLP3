@@ -58,6 +58,7 @@ def get_k_most_context(word, k=10):
 
 if __name__ == '__main__':
 
+    '''
     target_words = ['car', 'bus', 'hospital', 'hotel', 'gun', 'bomb', 'horse', 'fox', 'table', 'bowl', 'guitar',
                     'piano']
 
@@ -72,3 +73,5 @@ if __name__ == '__main__':
     dict_to_file(word2vec_file, 'word2vec/sim/deps.txt')
     dict_to_file(most_feature, 'word2vec/att/deps.txt')
 
+
+    '''
